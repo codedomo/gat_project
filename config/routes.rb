@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-
   root controller: :pages, action: :root
+
+  namespace :api do
+    scope :private_api do
+      resources :locations, only: :show, param: :country_code
+      resources :target_groups, only: :show, param: :country_code
+      post :evaluate_target, controller: :targets, action: :create
+    end
+    namespace :v1 do
+      resources :locations, only: :show, param: :country_code
+      resources :target_groups, only: :show, param: :country_code
+    end
+  end
 end

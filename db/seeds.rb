@@ -45,3 +45,15 @@ LOCATIONS.each do |location|
     secret_code: SecureRandom.hex(64)
   )
 end
+
+LocationGroup.create!(name: Location.first.name, country_id: Country.first.id, panel_provider_id: PanelProvider.first.id)
+LocationGroup.create!(name: Location.second.name, country_id: Country.second.id, panel_provider_id: PanelProvider.second.id)
+LocationGroup.create!(name: Location.third.name, country_id: Country.third.id, panel_provider_id: PanelProvider.third.id)
+LocationGroup.create!(name: Location.fourth.name, country_id: Country.first.id, panel_provider_id: PanelProvider.first.id)
+
+%w(TargetGroup1 TargetGroup2 TargetGroup3 TargetGroup4).each do |name|
+  t1 = TargetGroup.create!(name: name, external_id: SecureRandom.uuid, secret_code: SecureRandom.hex(64), parent_id: nil, panel_provider_id: PanelProvider.first.id)
+  t2 = TargetGroup.create!(name: name, external_id: SecureRandom.uuid, secret_code: SecureRandom.hex(64), parent_id: t1.id, panel_provider_id: PanelProvider.second.id)
+  t3 = TargetGroup.create!(name: name, external_id: SecureRandom.uuid, secret_code: SecureRandom.hex(64), parent_id: t2.id, panel_provider_id: PanelProvider.third.id)
+  t4 = TargetGroup.create!(name: name, external_id: SecureRandom.uuid, secret_code: SecureRandom.hex(64), parent_id: t3.id, panel_provider_id: PanelProvider.first.id)
+end
